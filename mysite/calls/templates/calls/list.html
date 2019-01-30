@@ -1,0 +1,24 @@
+<h1>Welcome to the Call Register!</h1>
+{% if call_list %}
+<table>
+    <tr>
+        <th>Call ID</th>
+        <th>Call Type</th>
+        <th>Call Duration(secs)</th>
+        <th>Total Cost</th>
+    </tr>
+    {% for call in call_list %}
+    <tr> 
+        <td style="text-align: center">{{ call.id }}</td>
+        <td style="text-align: center">{{ call.type }}</td>
+        <td style="text-align: center">{{ call.duration }}</td>
+        <td style="text-align: center">${{ call.calculateCost }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% else %}
+<p>No calls are registered yet.</p>
+{% endif %}
+
+<h2><a href="{% url 'calls:index' %}">Return</a></h2>
