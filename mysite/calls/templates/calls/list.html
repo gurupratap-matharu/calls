@@ -4,7 +4,7 @@
 
 <h1>Welcome to the Call Register!</h1>
 
-<h2><a href="{% url 'calls:index' %}">Return</a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+<h2><a href="{% url 'calls:index' %}">Home</a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
 <a href="{% url 'calls:register' %}">Register a new call</a></h2>
 
 {% if call_list %}
@@ -21,7 +21,7 @@
         <td style="text-align: center"><a href="{% url 'calls:detail' call.id %}" >{{ call.id }}</a></td>
         <td style="text-align: center">{{ call.type }}</td>
         <td style="text-align: center">{{ call.duration }}</td>
-        <td style="text-align: center">${{ call.cost }}</td>
+        <td style="text-align: center">${{ call.cost|floatformat:2 }}</td>
     </tr>
     {% endfor %}
 </table>

@@ -6,6 +6,7 @@ class CallModelTests(TestCase):
 
     def test_domestic_call_returns_fixed_cost(self):
         """irrespective of duration fixed value should be returned"""
+
         domestic = Type(type='Domestic', cost=100)
         domestic.save()
         c1 = Call(duration=10, type=domestic)
@@ -60,6 +61,7 @@ class CallModelTests(TestCase):
 
     def test_national_call_return_correct_cost(self):
         """for positive duration correct cost should be returned"""
+
         national = Type(type='national', cost=0.01)
         national.save()
         c1 = Call(duration=10, type=national)
@@ -85,6 +87,7 @@ class CallModelTests(TestCase):
 
     def test_national_call_with_negative_or_zero_duration(self):
         """for negative or zero duration zero cost should be returned"""
+
         national = Type(type='national', cost=0.01)
         national.save()
         c1 = Call(duration=-10, type=national)
@@ -113,6 +116,7 @@ class CallModelTests(TestCase):
 
     def test_international_call_returns_correct_cost(self):
         """for positive duration correct cost should be returned"""
+
         international = Type(type='international', cost=1)
         international.save()
         c1 = Call(duration=10, type=international)

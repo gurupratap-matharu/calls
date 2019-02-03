@@ -1,6 +1,8 @@
 from django.core.validators import MinValueValidator
-from django.utils import timezone
 from django.db import models
+from django.utils import timezone
+
+
 
 class Type(models.Model):
     """
@@ -11,8 +13,9 @@ class Type(models.Model):
         ('National', 'National'),
         ('Domestic', 'Domestic'),
     )
+
     type = models.CharField(max_length=15, choices=CALL_CHOICES)
-    cost = models.FloatField(default=0)
+    cost = models.FloatField(validators=[MinValueValidator(0)])
 
     def __str__(self):
         return self.type
@@ -32,18 +35,14 @@ class Call(models.Model):
         Here we over-ride the default `save` method to populate the cost field
         based on call duration and call type.
         """
-        if self.type.type == "Domestic":
-            if self.duration > 0:
-                self.cost = self.type.cost # Since domestic calls have fixed value
-                super().save(*args, **kwargs) # Call the "real" save() method.
-            else:
-                return
+        if self.duration <= 0:
+            return
+        elif self.type.type == "Domestic":
+            self.cost = self.type.cost # Since domestic calls have fixed value
         else:
-            if self.duration > 0:
-                self.cost = self.type.cost * self.duration # for national and international calls
-                super().save(*args, **kwargs)  # Call the "real" save() method.
-            else:
-                return
+            self.cost = self.type.cost * self.duration # for national and international calls
+        super().save(*args, **kwargs)  # Call the "real" save() method.
+
 
     def __str__(self):
         return "{} call of {} seconds".format(self.type.type, self.duration)

@@ -19,7 +19,7 @@
         <td style="text-align: center">{{ call.id }}</td>
         <td style="text-align: center">{{ call.type }}</td>
         <td style="text-align: center">{{ call.duration }}</td>
-        <td style="text-align: center">${{ call.cost }}</td>
+        <td style="text-align: center">${{ call.cost|floatformat:2 }}</td>
     </tr>
 </table>
 </div>
