@@ -1,52 +1,69 @@
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse
+from django.views import generic, View
 
-from .models import Call, Type
 from .forms import RegisterForm
+from .models import Call, Type
+
+class IndexView(generic.ListView):
+    """
+    CBV for generating simple index view of our calls app.
+    User can either chose to
+    1. list all the calls in the database
+    2. Register a new call in the database
+    """
+    template_name = 'calls/index.html'
+    def get_queryset(self):
+        return None
+
+class RegisterView(View):
+    """
+    Our form class that used class based views to render a call register form.
+    """
+    form_class = RegisterForm
+    template_name = 'calls/form.html'
+
+    def get(self, request, *args, **kwargs):
+        """
+        Our inbuilt GET method to render a new blank form
+        """
+        form = self.form_class()
+        return render(request, self.template_name, {'form': form})
 
 
-def index(request):
-    """
-    Our index view function that allows to either list all calls
-    of register a new call.
-    """
-    return render(request, 'calls/index.html')
-    
-def register(request):
-    """
-    Our view function to register an new call in the database.
-    """
-    
-    # if this is a POST request we need to process the form data
-    if request.method == 'POST':
-        # create a form instance and populate it with data from the request:
-        form = RegisterForm(request.POST)
-        # check whether it's valid:
+    def post(self, request, *args, **kwargs):
+        """
+        Our inbuilt POST method to read a saved form or populate it with
+        previously filled fields.
+        """
+        form = self.form_class(request.POST)
         if form.is_valid():
             # process the data in form.cleaned_data as required
-                        
             duration = form.cleaned_data['duration']
             type = form.cleaned_data['type']
-            
-            # save data in our database
+
+            # create a call in our database
             Call.objects.create(duration=duration, type=type)
-            
+
             # redirect to a the list all calls url
             return HttpResponseRedirect(reverse('calls:list'))
-            
-            
-    # if a GET (or any other method) we'll create a blank form
-    else:
-        form = RegisterForm()
 
-    return render(request, 'calls/form.html', {'form': form})
-    
-def list(request):
+        return render(request, self.template_name, {'form': form})
+
+class ListView(generic.ListView):
     """
-    The view function to list all the calls in the database.
+    Our List view class that used django's CBV and renders out a list of all the
+    calls in the database.
     """
-    call_list = Call.objects.all()
-    context = {'call_list': call_list, }
-    return render(request, 'calls/list.html', context)
-    
+    model = Call
+    template_name = 'calls/list.html'
+
+
+class DetailView(generic.DetailView):
+    """
+    Our Detail view class that used django's CBV and shows the detail
+    of any particular call in the database.
+    """
+    model = Call
+    template_name = 'calls/detail.html'

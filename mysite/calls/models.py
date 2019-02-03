@@ -2,7 +2,6 @@ from django.core.validators import MinValueValidator
 from django.utils import timezone
 from django.db import models
 
-
 class Type(models.Model):
     """
     We define the type of call - domestic, national or international in this class. This gives us the freedom to change their rates in the admin.
@@ -14,7 +13,7 @@ class Type(models.Model):
     )
     type = models.CharField(max_length=15, choices=CALL_CHOICES)
     cost = models.FloatField(default=0)
-    
+
     def __str__(self):
         return self.type
 
@@ -23,23 +22,29 @@ class Call(models.Model):
     Our call models objects are created here and stored in the database
     as a table with the attributes mentioned below.
     """
-        
+
     duration = models.PositiveIntegerField('Call duration in seconds', validators=[MinValueValidator(1)], default=1)
     type = models.ForeignKey(Type,on_delete=models.CASCADE,default=None)
-    
-    @property
-    def calculateCost(self):
-        """
-        Calculates the total cost of the call based on call type and call duration.
-        """
-        if (self.type.type == 'Domestic'):
-            
-            return self.type.cost
+    cost = models.FloatField(default=0)
 
+    def save(self, *args, **kwargs):
+        """
+        Here we over-ride the default `save` method to populate the cost field
+        based on call duration and call type.
+        """
+        if self.type.type == "Domestic":
+            if self.duration > 0:
+                self.cost = self.type.cost # Since domestic calls have fixed value
+                super().save(*args, **kwargs) # Call the "real" save() method.
+            else:
+                return
         else:
-            return self.type.cost * self.duration
-
+            if self.duration > 0:
+                self.cost = self.type.cost * self.duration # for national and international calls
+                super().save(*args, **kwargs)  # Call the "real" save() method.
+            else:
+                return
 
     def __str__(self):
         return "{} call of {} seconds".format(self.type.type, self.duration)
-        
+
