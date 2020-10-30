@@ -3,7 +3,6 @@ from django.db import models
 from django.utils import timezone
 
 
-
 class Type(models.Model):
     """
     We define the type of call - domestic, national or international in this class. This gives us the freedom to change their rates in the admin.
