@@ -1,6 +1,6 @@
 <h1 align="center">Calls</h1>
 
-<img src="https://github.com/gurupratap-matharu/calls/blob/master/staticfiles/assets/img/hero.jpg" alt="drawing" width="1920"/>
+<img src="https://github.com/gurupratap-matharu/calls/blob/master/staticfiles/img/hero.jpg" alt="drawing" width="1920"/>
 
 ## Live
 
