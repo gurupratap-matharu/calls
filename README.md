@@ -1,35 +1,58 @@
-# Call Register
+<h1 align="center">Calls</h1>
 
-A django projects that registers domestic, national and international calls in the database.
+<img src="https://github.com/gurupratap-matharu/calls/blob/master/staticfiles/assets/img/hero.jpg" alt="drawing" width="1920"/>
 
-Calls can be configure in the admin area but are generally divided into three common types.
+## Live
+
+<http://gurupratap.pythonanywhere.com/calls/>
+
+## Description
+
+- A django projects that registers domestic, national and international calls in the database.
+- Calls can be configure in the admin area but are generally divided into three common types.
 
 * Local: Fixed cost of $0.10
 * National: Billed at $0.01 per second
 * International: Billed at $0.03 per second.
 
-The interface itself permits 
+The interface itself permits
 
 * To register a new call
 * To see a list of all the calls (id, type, duration and cost)
 
-## License
+## Stripe Payments
 
-This code is open source. So feel free to use, modify, share, download as per your need. I do not take risk nor responsibility for your errors or any commercial damage.
+<img src="https://github.com/gurupratap-matharu/midware/blob/master/staticfiles/img/stripe.png" alt="drawing" width="1920"/>
 
-## How to run?
-This code is written in python3.6.
+## Browsable Request API
 
-## On local machine
-Go to the mysite project folder that contains the manage.py file and then
+<img src="https://github.com/gurupratap-matharu/midware/blob/master/staticfiles/img/request.png" alt="drawing" width="1920"/>
 
-```
-python manage.py runserver
-```
+## Motivation 🎯
 
-Else directly access the webapp on this link
+- App suggestion based on interview assignment
+- Deployment with docker on heroku
+- Working with tools that are free for open source
+- Working with payment methods like stripe and REST apis
 
-http://gurupratap.pythonanywhere.com/calls/
+## Features ✨
 
+- Logs Requests and responses using logging module
+- Save Requests and responses to database for persistency
+- Connects with Stripe payments to creates a payment upon POST
+- Versioning of api possible see `/api/v1/`
+- Fast response time
+- Easily customizable with Login | Logout | reset password features and rest-token authentication
+- Make file for faster setup and reusability
 
+## Development setup 🛠
 
+Steps to locally setup development after cloning the project.
+
+`docker-compose up -d --build`
+
+or simply
+
+`make build`
+
+Make sure you rename .env.example to .env and declare the environment variables in root folder for docker to pickup!
