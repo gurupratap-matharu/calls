@@ -2,12 +2,12 @@ from django.test import TestCase
 
 from .models import Call, Type
 
-class CallModelTests(TestCase):
 
+class CallModelTests(TestCase):
     def test_domestic_call_returns_fixed_cost(self):
         """irrespective of duration fixed value should be returned"""
 
-        domestic = Type(type='Domestic', cost=100)
+        domestic = Type(type="Domestic", cost=100)
         domestic.save()
         c1 = Call(duration=10, type=domestic)
         c2 = Call(duration=500, type=domestic)
@@ -33,7 +33,7 @@ class CallModelTests(TestCase):
     def test_domestic_call_with_negative_or_zero_duration(self):
         """negative or zero duration should return zero cost"""
 
-        domestic = Type(type='Domestic', cost=100)
+        domestic = Type(type="Domestic", cost=100)
         domestic.save()
         c1 = Call(duration=-10, type=domestic)
         c2 = Call(duration=-500, type=domestic)
@@ -62,7 +62,7 @@ class CallModelTests(TestCase):
     def test_national_call_return_correct_cost(self):
         """for positive duration correct cost should be returned"""
 
-        national = Type(type='national', cost=0.01)
+        national = Type(type="national", cost=0.01)
         national.save()
         c1 = Call(duration=10, type=national)
         c2 = Call(duration=500, type=national)
@@ -88,7 +88,7 @@ class CallModelTests(TestCase):
     def test_national_call_with_negative_or_zero_duration(self):
         """for negative or zero duration zero cost should be returned"""
 
-        national = Type(type='national', cost=0.01)
+        national = Type(type="national", cost=0.01)
         national.save()
         c1 = Call(duration=-10, type=national)
         c2 = Call(duration=-500, type=national)
@@ -117,7 +117,7 @@ class CallModelTests(TestCase):
     def test_international_call_returns_correct_cost(self):
         """for positive duration correct cost should be returned"""
 
-        international = Type(type='international', cost=1)
+        international = Type(type="international", cost=1)
         international.save()
         c1 = Call(duration=10, type=international)
         c2 = Call(duration=500, type=international)
@@ -143,7 +143,7 @@ class CallModelTests(TestCase):
     def test_international_call_with_negative_or_zero_duration(self):
         """for negative or zero duration zero cost should be returned"""
 
-        international = Type(type='international', cost=1)
+        international = Type(type="international", cost=1)
         international.save()
         c1 = Call(duration=-10, type=international)
         c2 = Call(duration=-500, type=international)
