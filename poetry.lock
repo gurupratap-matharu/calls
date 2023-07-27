@@ -583,6 +583,20 @@ files = [
 plugins = ["importlib-metadata"]
 
 [[package]]
+name = "python-dotenv"
+version = "1.0.0"
+description = "Read key-value pairs from a .env file and set them as environment variables"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "python-dotenv-1.0.0.tar.gz", hash = "sha256:a8df96034aae6d2d50a4ebe8216326c61c3eb64836776504fcca410e5937a3ba"},
+    {file = "python_dotenv-1.0.0-py3-none-any.whl", hash = "sha256:f5971a9226b701070a4bf2c38c89e5a3f0d64de8debda981d1db98583009122a"},
+]
+
+[package.extras]
+cli = ["click (>=5.0)"]
+
+[[package]]
 name = "pyyaml"
 version = "6.0.1"
 description = "YAML parser and emitter for Python"
@@ -860,4 +874,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "3.11"
-content-hash = "909a06238d6de443e7b1ac5152c42c94376022750e0238acad0e593d1c87e08d"
+content-hash = "f1eac49903c5cfd7b1ee21102c2815d49552baddcaec1fad69002233c1f1af51"
