@@ -1,10 +1,15 @@
+import logging
+
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.views import View, generic
+from django.views.generic import ListView
 
 from .forms import RegisterForm
 from .models import Call
+
+logger = logging.getLogger(__name__)
 
 
 class IndexView(generic.ListView):
@@ -56,14 +61,22 @@ class RegisterView(View):
         return render(request, self.template_name, {"form": form})
 
 
-class ListView(generic.ListView):
+class CallListView(ListView):
     """
-    Our List view class that used django's CBV and renders out a list of all the
-    calls in the database.
+    List all the calls in the database.
     """
 
     model = Call
     template_name = "calls/list.html"
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+
+        q = self.request.GET.get("q")
+
+        logger.info("q:%s" % q)
+
+        return qs
 
 
 class DetailView(generic.DetailView):

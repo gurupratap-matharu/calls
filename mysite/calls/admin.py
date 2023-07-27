@@ -1,6 +1,5 @@
 from django.contrib import admin
 
-from .models import Call, Type
+from .models import Call
 
 admin.site.register(Call)
-admin.site.register(Type)
