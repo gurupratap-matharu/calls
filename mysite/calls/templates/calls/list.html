@@ -5,16 +5,18 @@
         <div style="overflow-x:auto;">
             <table>
                 <tr>
-                    <th>Call ID</th>
-                    <th>Call Type</th>
-                    <th>Call Duration(secs)</th>
+                    <th>Call</th>
+                    <th>Date</th>
+                    <th>Category</th>
+                    <th>Duration(secs)</th>
                     <th>Total Cost</th>
                 </tr>
                 {% for call in call_list %}
                     <tr>
                         <td style="text-align: center">
-                            <a href="{% url 'calls:detail' call.id %}">{{ call.id }}</a>
+                            <a href="{{ call.get_absolute_url }}">{{ call.id }}</a>
                         </td>
+                        <td style="text-align: center">{{ call.created_on }}</td>
                         <td style="text-align: center">{{ call.category }}</td>
                         <td style="text-align: center">{{ call.duration }}</td>
                         <td style="text-align: center">${{ call.cost|floatformat:2 }}</td>
@@ -22,6 +24,9 @@
                 {% endfor %}
             </table>
         </div>
+
+        {% include "includes/pagination.html" %}
+
     {% else %}
         <p>No calls are registered yet.</p>
     {% endif %}
