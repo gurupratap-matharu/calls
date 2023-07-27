@@ -18,7 +18,8 @@
         <h1>Calls</h1>
         <h2>
             <a href="{% url 'calls:index' %}">Home</a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-            <a href="{% url 'calls:register' %}">Register a new call</a>
+            <a href="{% url 'calls:call-list' %}">List</a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+            <a href="{% url 'calls:call-register' %}">Register a new call</a>
         </h2>
 
         {% block content %}
