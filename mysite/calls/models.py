@@ -32,13 +32,19 @@ class Category(models.Model):
         (DOMESTIC, "Domestic"),
     )
 
-    line = models.CharField(max_length=15, choices=LINE_CHOICES)
+    line = models.CharField(max_length=2, choices=LINE_CHOICES, unique=True)
     cost = models.DecimalField(
-        max_digits=10, decimal_places=2, validators=[MinValueValidator(0)]
+        verbose_name="Cost per second",
+        max_digits=10,
+        decimal_places=2,
+        validators=[MinValueValidator(0)],
     )
 
+    class Meta:
+        verbose_name_plural = "categories"
+
     def __str__(self):
-        return f"{self.line}"
+        return self.get_line_display()
 
 
 class Call(models.Model):
@@ -57,6 +63,8 @@ class Call(models.Model):
     cost = models.DecimalField(
         default=0, max_digits=10, decimal_places=2, validators=[MinValueValidator(0)]
     )
+    created_on = models.DateTimeField(auto_now_add=True)
+    updated_on = models.DateTimeField(auto_now=True)
 
     objects = models.Manager()
     search = SearchManager()
@@ -64,17 +72,11 @@ class Call(models.Model):
     def save(self, *args, **kwargs):
         """
         Here we over-ride the default `save` method to populate the cost field
-        based on call duration and call type.
+        based on call duration and call category price.
         """
-        if self.duration <= 0:
-            return
-        elif self.type.type == "Domestic":
-            self.cost = self.type.cost  # Since domestic calls have fixed value
-        else:
-            self.cost = (
-                self.type.cost * self.duration
-            )  # for national and international calls
-        super().save(*args, **kwargs)  # Call the "real" save() method.
+
+        self.cost = self.category.cost * self.duration
+        return super().save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.category.line} call of {self.duration} seconds"
