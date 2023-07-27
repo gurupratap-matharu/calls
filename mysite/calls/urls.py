@@ -1,12 +1,12 @@
 from django.urls import path
 
-from calls.views import CallListView, DetailView, IndexView, RegisterView
+from calls.views import CallDetailView, CallListView, CallRegisterView, IndexView
 
 app_name = "calls"
 
 urlpatterns = [
-    path("", CallListView.as_view(), name="list"),
+    path("", CallListView.as_view(), name="call-list"),
     path("index/", IndexView.as_view(), name="index"),
-    path("<uuid:pk>/detail/", DetailView.as_view(), name="detail"),
-    path("register/", RegisterView.as_view(), name="register"),
+    path("<uuid:id>/detail/", CallDetailView.as_view(), name="call-detail"),
+    path("register/", CallRegisterView.as_view(), name="call-register"),
 ]

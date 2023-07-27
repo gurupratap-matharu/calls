@@ -3,6 +3,7 @@ import uuid
 
 from django.core.validators import MinValueValidator
 from django.db import models
+from django.urls import reverse
 
 logger = logging.getLogger(__name__)
 
@@ -80,3 +81,6 @@ class Call(models.Model):
 
     def __str__(self):
         return f"{self.category.get_line_display()} call of {self.duration} seconds"
+
+    def get_absolute_url(self):
+        return reverse("calls:call-detail", kwargs={"id": self.id})
