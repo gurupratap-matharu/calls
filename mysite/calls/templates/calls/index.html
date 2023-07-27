@@ -1,18 +1,5 @@
-{% load static %}
+{% extends "layouts/base.html" %}
 
-<link rel="stylesheet" type="text/css" href="{% static 'calls/style.css' %}">
-
-<h1>Welcome to the Global Calls database</h1>
-
-<table>
-    <tr>
-      <td>
-        <a href="{% url 'calls:list' %}">List all Calls</a>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <a href="{% url 'calls:register' %}">Register a new Call</a>
-      </td>
-    </tr>
-</table>
+{% block content %}
+    <h1>Welcome to the Global Calls database</h1>
+{% endblock content %}

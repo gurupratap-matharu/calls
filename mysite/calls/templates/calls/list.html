@@ -1,31 +1,28 @@
-{% load static %}
+{% extends "layouts/base.html" %}
 
-<link rel="stylesheet" type="text/css" href="{% static 'calls/style.css' %}">
-
-<h1>Welcome to the Call Register!</h1>
-
-<h2><a href="{% url 'calls:index' %}">Home</a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-<a href="{% url 'calls:register' %}">Register a new call</a></h2>
-
-{% if call_list %}
-<div style="overflow-x:auto;">
-<table>
-    <tr>
-        <th>Call ID</th>
-        <th>Call Type</th>
-        <th>Call Duration(secs)</th>
-        <th>Total Cost</th>
-    </tr>
-    {% for call in call_list %}
-    <tr>
-        <td style="text-align: center"><a href="{% url 'calls:detail' call.id %}" >{{ call.id }}</a></td>
-        <td style="text-align: center">{{ call.type }}</td>
-        <td style="text-align: center">{{ call.duration }}</td>
-        <td style="text-align: center">${{ call.cost|floatformat:2 }}</td>
-    </tr>
-    {% endfor %}
-</table>
-</div>
-{% else %}
-<p>No calls are registered yet.</p>
-{% endif %}
+{% block content %}
+    {% if call_list %}
+        <div style="overflow-x:auto;">
+            <table>
+                <tr>
+                    <th>Call ID</th>
+                    <th>Call Type</th>
+                    <th>Call Duration(secs)</th>
+                    <th>Total Cost</th>
+                </tr>
+                {% for call in call_list %}
+                    <tr>
+                        <td style="text-align: center">
+                            <a href="{% url 'calls:detail' call.id %}">{{ call.id }}</a>
+                        </td>
+                        <td style="text-align: center">{{ call.category }}</td>
+                        <td style="text-align: center">{{ call.duration }}</td>
+                        <td style="text-align: center">${{ call.cost|floatformat:2 }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    {% else %}
+        <p>No calls are registered yet.</p>
+    {% endif %}
+{% endblock content %}

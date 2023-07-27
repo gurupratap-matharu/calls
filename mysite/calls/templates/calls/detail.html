@@ -1,25 +1,20 @@
-{% load static %}
+{% extends "layouts/base.html" %}
 
-<link rel="stylesheet" type="text/css" href="{% static 'calls/style.css' %}">
-
-<h1>Call Details</h1>
-
-<h2><a href="{% url 'calls:index' %}">Return</a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-<a href="{% url 'calls:register' %}">Register a new call</a></h2>
-
-<div style="overflow-x:auto;">
-<table>
-    <tr>
-        <th>Call ID</th>
-        <th>Call Type</th>
-        <th>Call Duration(secs)</th>
-        <th>Total Cost</th>
-    </tr>
-    <tr>
-        <td style="text-align: center">{{ call.id }}</td>
-        <td style="text-align: center">{{ call.type }}</td>
-        <td style="text-align: center">{{ call.duration }}</td>
-        <td style="text-align: center">${{ call.cost|floatformat:2 }}</td>
-    </tr>
-</table>
-</div>
+{% block content %}
+    <div style="overflow-x:auto;">
+        <table>
+            <tr>
+                <th>Call ID</th>
+                <th>Call Type</th>
+                <th>Call Duration(secs)</th>
+                <th>Total Cost</th>
+            </tr>
+            <tr>
+                <td style="text-align: center">{{ call.id }}</td>
+                <td style="text-align: center">{{ call.type }}</td>
+                <td style="text-align: center">{{ call.duration }}</td>
+                <td style="text-align: center">${{ call.cost|floatformat:2 }}</td>
+            </tr>
+        </table>
+    </div>
+{% endblock content %}
