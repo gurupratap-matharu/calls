@@ -1,11 +1,8 @@
 import logging
 
-from django.http import HttpResponseRedirect
-from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DetailView, ListView
 
-from .forms import RegisterForm
 from .models import Call
 
 logger = logging.getLogger(__name__)
