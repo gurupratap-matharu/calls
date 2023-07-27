@@ -11,5 +11,5 @@ class CategoryAdmin(admin.ModelAdmin):
 @admin.register(Call)
 class CallAdmin(admin.ModelAdmin):
     list_display = ("id", "duration", "category", "cost")
-    list_filter = ("category",)
+    list_filter = ("category", "created_on")
     readonly_fields = ("cost",)

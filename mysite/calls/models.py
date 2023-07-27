@@ -79,4 +79,4 @@ class Call(models.Model):
         return super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"{self.category.line} call of {self.duration} seconds"
+        return f"{self.category.get_line_display()} call of {self.duration} seconds"
