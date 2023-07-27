@@ -77,33 +77,5 @@ ci: lint security test
 superuser:
 	python mysite/manage.py createsuperuser
 
-status:
-	@echo "Nginx"
-	@sudo systemctl status nginx
-
-	@echo "Gunicorn Socket"
-	@sudo systemctl status wagtail.socket
-
-	@echo "Gunicorn Service"
-	@sudo systemctl status wagtail.service
-
-
-reload:
-	@echo "reloading daemon..."
-	@sudo systemctl daemon-reload
-
-	@echo "🔌 restarting gunicorn socket..."
-	@sudo systemctl restart wagtail.socket
-
-	@echo "🦄 restarting gunicorn service..."
-	@sudo systemctl restart wagtail.service
-	
-	@echo "⚙️ reloading nginx..."
-	@sudo nginx -s reload
-	
-	@echo "All done! 💅💫💖"
-
-logs:
-	@sudo journalctl -fu wagtail.service
 	
 
