@@ -49,11 +49,6 @@ class Category(models.Model):
 
 
 class Call(models.Model):
-    """
-    Our call models objects are created here and stored in the database
-    as a table with the attributes mentioned below.
-    """
-
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     duration = models.PositiveIntegerField(
         "Call duration in seconds", validators=[MinValueValidator(1)], default=1
@@ -83,4 +78,4 @@ class Call(models.Model):
         return f"{self.category.get_line_display()} call of {self.duration} seconds"
 
     def get_absolute_url(self):
-        return reverse("calls:call-detail", kwargs={"id": self.id})
+        return reverse("calls:call-detail", kwargs={"pk": self.id})
