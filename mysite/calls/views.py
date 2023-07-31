@@ -22,7 +22,7 @@ class IndexView(ListView):
         return None
 
 
-class CallRegisterView(CreateView):
+class CallCreateView(CreateView):
     """
     Register a new call in the app
     """
@@ -43,21 +43,17 @@ class CallListView(ListView):
     paginate_by = 20
 
     def get_queryset(self):
-        qs = super().get_queryset()
-
         q = self.request.GET.get("q")
-
         logger.info("q:%s" % q)
 
+        qs = super().get_queryset()
         return qs
 
 
 class CallDetailView(DetailView):
     """
-    Our Detail view class that used django's CBV and shows the detail
-    of any particular call in the database.
+    Shows the detail of a single call in the database.
     """
 
     model = Call
-    pk_url_kwarg = "id"
     template_name = "calls/detail.html"
