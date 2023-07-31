@@ -2,8 +2,8 @@
 
 {% block content %}
     {% if call_list %}
-        <div style="overflow-x:auto;">
-            <table>
+        <table>
+            <thead>
                 <tr>
                     <th>Call</th>
                     <th>Date</th>
@@ -11,19 +11,21 @@
                     <th>Duration(secs)</th>
                     <th>Total Cost</th>
                 </tr>
+            </thead>
+            <tbody>
                 {% for call in call_list %}
                     <tr>
-                        <td style="text-align: center">
+                        <td>
                             <a href="{{ call.get_absolute_url }}">{{ call.id }}</a>
                         </td>
-                        <td style="text-align: center">{{ call.created_on }}</td>
-                        <td style="text-align: center">{{ call.category }}</td>
-                        <td style="text-align: center">{{ call.duration }}</td>
-                        <td style="text-align: center">${{ call.cost|floatformat:2 }}</td>
+                        <td>{{ call.created_on }}</td>
+                        <td>{{ call.category }}</td>
+                        <td>{{ call.duration }}</td>
+                        <td>${{ call.cost|floatformat:2 }}</td>
                     </tr>
                 {% endfor %}
-            </table>
-        </div>
+            </tbody>
+        </table>
 
         {% include "includes/pagination.html" %}
 
