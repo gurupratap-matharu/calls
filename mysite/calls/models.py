@@ -65,6 +65,11 @@ class Call(models.Model):
     objects = models.Manager()
     search = SearchManager()
 
+    class Meta:
+        verbose_name = "call"
+        verbose_name_plural = "calls"
+        ordering = ("-created_on",)
+
     def save(self, *args, **kwargs):
         """
         Here we over-ride the default `save` method to populate the cost field
