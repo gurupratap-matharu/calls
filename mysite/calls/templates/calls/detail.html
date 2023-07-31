@@ -16,6 +16,10 @@
                 <td>{{ call.category }}</td>
                 <td>{{ call.duration }}</td>
                 <td>${{ call.cost|floatformat:2 }}</td>
+                <td>
+                    <a href="{% url 'calls:call-update' call.id %}">Edit</a>
+                    <a href="{% url 'calls:call-delete' call.id %}">Delete</a>
+                </td>
             </tr>
         </table>
     </div>

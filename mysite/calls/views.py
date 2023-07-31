@@ -1,7 +1,13 @@
 import logging
 
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, DetailView, ListView
+from django.views.generic import (
+    CreateView,
+    DeleteView,
+    DetailView,
+    ListView,
+    UpdateView,
+)
 
 from .models import Call
 
@@ -29,7 +35,7 @@ class CallCreateView(CreateView):
 
     model = Call
     fields = ("duration", "category")
-    template_name = "calls/form.html"
+    template_name = "calls/call_create_form.html"
     success_url = reverse_lazy("calls:call-list")
 
 
@@ -57,3 +63,15 @@ class CallDetailView(DetailView):
 
     model = Call
     template_name = "calls/detail.html"
+
+
+class CallUpdateView(UpdateView):
+    model = Call
+    fields = ("duration", "category")
+    template_name = "calls/call_update_form.html"
+
+
+class CallDeleteView(DeleteView):
+    model = Call
+    template_name = "calls/call_confirm_delete.html"
+    success_url = reverse_lazy("calls:call-list")
