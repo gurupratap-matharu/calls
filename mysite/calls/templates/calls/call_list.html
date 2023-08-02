@@ -1,39 +1,34 @@
-{% extends "layouts/base.html" %}
-
-{% block content %}
-    {% if call_list %}
-        <table>
-            <thead>
+{% if call_list %}
+    <table>
+        <thead>
+            <tr>
+                <th>Call</th>
+                <th>Date</th>
+                <th>Category</th>
+                <th>Duration(secs)</th>
+                <th>Total Cost</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for call in call_list %}
                 <tr>
-                    <th>Call</th>
-                    <th>Date</th>
-                    <th>Category</th>
-                    <th>Duration(secs)</th>
-                    <th>Total Cost</th>
+                    <td>
+                        <a href="{{ call.get_absolute_url }}">{{ call.created_on }}</a>
+                    </td>
+                    <td>{{ call.category }}</td>
+                    <td>{{ call.duration }}</td>
+                    <td>${{ call.cost|floatformat:2 }}</td>
+                    <td>
+                        <a href="{% url 'calls:call-update' call.id %}">Edit</a>
+                        <a href="{% url 'calls:call-delete' call.id %}">Delete</a>
+                    </td>
                 </tr>
-            </thead>
-            <tbody>
-                {% for call in call_list %}
-                    <tr>
-                        <td>
-                            <a href="{{ call.get_absolute_url }}">{{ call.id }}</a>
-                        </td>
-                        <td>{{ call.created_on }}</td>
-                        <td>{{ call.category }}</td>
-                        <td>{{ call.duration }}</td>
-                        <td>${{ call.cost|floatformat:2 }}</td>
-                        <td>
-                            <a href="{% url 'calls:call-update' call.id %}">Edit</a>
-                            <a href="{% url 'calls:call-delete' call.id %}">Delete</a>
-                        </td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+            {% endfor %}
+        </tbody>
+    </table>
 
-        {% include "includes/pagination.html" %}
+    {% include "includes/pagination.html" %}
 
-    {% else %}
-        <p>No calls are registered yet.</p>
-    {% endif %}
-{% endblock content %}
+{% else %}
+    <p>No calls are registered yet.</p>
+{% endif %}

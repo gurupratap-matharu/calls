@@ -1,5 +1,9 @@
 {% extends "layouts/base.html" %}
 
 {% block content %}
-    <h1>Welcome to the Global Calls database</h1>
+    <button hx-get="{% url 'calls:call-list' %}"
+            hx-target="#main"
+            hx-swap="outerHTML"
+            hx-trigger="click, keyup[ctrlKey && key == 'l'] from:body">Get all calls</button>
+    <div id="main"></div>
 {% endblock content %}
