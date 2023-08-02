@@ -1,3 +1,4 @@
+from http import HTTPStatus
 from random import choice, randint
 
 from django.test import TestCase
@@ -7,9 +8,9 @@ from calls.models import Call, Category
 from calls.views import CallListView
 
 
-class CallListViewTests(TestCase):
+class CallSmokeTests(TestCase):
     """
-    Tests suite for the call list view
+    Tests all views are live in one go
     """
 
     @classmethod
@@ -17,15 +18,21 @@ class CallListViewTests(TestCase):
         cls.url = reverse("calls:call-list")
         cls.template = "calls/call_list.html"
 
-        category_objs = [Category("I", 10), Category("N", 2), Category("D", 1)]
-        cls.categories = Category.objects.bulk_create(objs=category_objs)
+        cls.categories = [
+            Category.objects.create(line="I", cost=10),
+            Category.objects.create(line="N", cost=2),
+            Category.objects.create(line="D", cost=1),
+        ]
 
-        call_objs = [
-            Call(duration=randint(1, 100), category=choice(category_objs))
+        cls.calls = [
+            Call(duration=randint(1, 100), category=choice(cls.categories))
             for _ in range(3)
         ]
-        cls.calls = Call.objects.bulk_create(objs=call_objs)
 
-    def test_call_list_url_resolves_correct_view(self):
-        view = resolve(self.url)
-        self.assertEqual(view.func.__name__, CallListView.as_view().__name__)
+    def test_call_list_view_works(self):
+        response = self.client.get(reverse("calls:call-list"))
+
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+        self.assertTemplateUsed(response, "calls/call_list.html")
+        self.assertContains(response, "Calls")
+        self.assertNotContains(response, "Hi I should not be on this page")
