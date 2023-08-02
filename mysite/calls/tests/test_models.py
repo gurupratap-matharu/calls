@@ -1,7 +1,7 @@
 from django.test import TestCase
 
 from calls.models import Call, Category
- 
+
 
 class CallModelTests(TestCase):
     def test_domestic_call_returns_fixed_cost(self):

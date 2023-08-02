@@ -2,10 +2,9 @@ from http import HTTPStatus
 from random import choice, randint
 
 from django.test import TestCase
-from django.urls import resolve, reverse
+from django.urls import reverse
 
 from calls.models import Call, Category
-from calls.views import CallListView
 
 
 class CallSmokeTests(TestCase):
