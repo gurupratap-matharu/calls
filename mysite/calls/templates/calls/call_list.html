@@ -1,34 +1,45 @@
-{% if call_list %}
-    <table>
-        <thead>
-            <tr>
-                <th>Call</th>
-                <th>Date</th>
-                <th>Category</th>
-                <th>Duration(secs)</th>
-                <th>Total Cost</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for call in call_list %}
+{% extends "layouts/base.html" %}
+
+{% block content %}
+    {% if call_list %}
+        <table>
+            <thead>
                 <tr>
-                    <td>
-                        <a href="{{ call.get_absolute_url }}">{{ call.created_on }}</a>
-                    </td>
-                    <td>{{ call.category }}</td>
-                    <td>{{ call.duration }}</td>
-                    <td>${{ call.cost|floatformat:2 }}</td>
-                    <td>
-                        <a href="{% url 'calls:call-update' call.id %}">Edit</a>
-                        <a href="{% url 'calls:call-delete' call.id %}">Delete</a>
+                    <th>Call</th>
+                    <th>Date</th>
+                    <th>Category</th>
+                    <th>Duration(secs)</th>
+                    <th>Total Cost</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for call in call_list %}
+                    <tr>
+                        <td>
+                            <a href="{{ call.get_absolute_url }}">{{ call.created_on }}</a>
+                        </td>
+                        <td>{{ call.category }}</td>
+                        <td>{{ call.duration }}</td>
+                        <td>${{ call.cost|floatformat:2 }}</td>
+                        <td>
+                            <a href="{% url 'calls:call-update' call.id %}">Edit</a>
+                            <a href="{% url 'calls:call-delete' call.id %}">Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                <tr>
+                    <td colspan="5" style="text-align: center">
+                        <button hx-target="closest tr" hx-swap="outerHTML" hx-select="tbody > tr" hx-get="?page={{ page_obj.next_page_number }}">
+                            Load More
+                        </button>
                     </td>
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            </tbody>
+        </table>
 
-    {% include "includes/pagination.html" %}
+        {% include "includes/pagination.html" %}
 
-{% else %}
-    <p>No calls are registered yet.</p>
-{% endif %}
+    {% else %}
+        <p>No calls are registered yet.</p>
+    {% endif %}
+{% endblock content %}
