@@ -5,5 +5,14 @@
             hx-target="#main"
             hx-swap="outerHTML"
             hx-trigger="click, keyup[ctrlKey && key == 'l'] from:body">Get all calls</button>
-    <div id="main"></div>
+    <div id="main">
+        <section>
+            <form>
+                {% csrf_token %}
+                <label for="search">Search for calls</label>
+                <input type="search" name="q" id="search" placeholder="international">
+                <button hx-get="{% url 'calls:call-list' %}" hx-target="#main" hx-include="#search">Search</button>
+            </form>
+        </section>
+    </div>
 {% endblock content %}

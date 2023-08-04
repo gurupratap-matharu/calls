@@ -7,9 +7,10 @@ from django.views.generic import (
     DetailView,
     ListView,
     UpdateView,
+    View,
 )
 
-from .models import Call
+from calls.models import Call
 
 logger = logging.getLogger(__name__)
 
@@ -53,6 +54,8 @@ class CallListView(ListView):
         logger.info("q:%s" % q)
 
         qs = super().get_queryset()
+        if q:
+            qs = qs.filter(category__line=q)
         return qs
 
 
